@@ -1,0 +1,115 @@
+@font-face {
+    font-family: "Retro Number";
+    src: url("1900805.ttf");
+}
+:root {
+    font-family: "Retro Number";
+}
+html {
+    text-align: center;
+    font-size: 200%;
+    font-weight: 300%;
+}
+body {
+    width: 30%;
+    margin: auto auto;
+}
+div#pomodoroClock {
+    padding: 30px;
+    border-style: none;
+    border-radius: 15px;
+    background-image: linear-gradient(to bottom, #8585ad, #3d3d5c);
+}
+div#timeSelectors {
+    text-align: left;
+    border-radius: 15px 15px 15px 15px;
+    background-image: linear-gradient(to left, #ff6666, #ff6666);
+}
+div.pomodoroSelector {
+    height: 60px;
+    line-height: 60px;
+    margin-left: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: crimson;
+}
+button.less, button.more {
+    font-family: "Retro Number";
+    font-size: xx-large;
+    border: 2px solid black;
+    background: none;
+    border-radius: 20%;
+    border-color: crimson;
+    color: crimson;  
+    float: right;
+    margin-right: 10px;
+    margin-top: 9px; 
+}
+span.valueTime {
+    float: right;
+    margin-top: 1px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+button:hover {
+    background-color: crimson;
+    color: white;
+}
+
+button.less1 {
+    margin-left: 136px;
+    position: absolute;
+}
+button.less2 {
+    position: absolute;
+    margin-left: 78px;
+}
+button.less3 {
+    position: absolute;
+    margin-left: 100px;
+}
+div.shortPauseSelector {
+    height: 60px;
+    line-height: 60px;
+    margin-left: 10px;
+    border-bottom-style: solid;
+    border-bottom-color: crimson;
+}
+div.longPauseSelector {
+    height: 60px;
+    line-height: 2;
+    margin-left: 10px;
+}
+h4.textShortSelector {
+    margin:auto
+}
+h4.textLongSelector {
+    margin:auto
+}
+div#mainTimer {
+    display: block;
+    border-radius: 15px 15px 15px 15px;
+}
+h4.countdown {
+    font-size: 100px;
+    margin: 20px auto 20px auto;
+    text-align: center;
+}
+div#startPauseReset {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(1, 1fr);
+}
+button#startPauseReset {
+    height: 90px;
+    background-image: linear-gradient(to bottom, #ff6666, #ff0066);
+    font-family: "Retro Number";
+    font-size: xx-large;
+    border-color: #cc99ff;
+    line-height: 0px;
+}
+button.start {
+    border-radius: 15px 1px 1px 15px;
+}
+button.reset {
+    border-radius: 1px 15px 15px 1px;
+}
