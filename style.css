@@ -107,6 +107,9 @@ button#startPauseReset {
     border-color: #cc99ff;
     line-height: 0px;
 }
+.active {
+    background-image: linear-gradient(to bottom, #a866ff, #4c00ff) !important;
+}
 button.start {
     border-radius: 15px 1px 1px 15px;
 }
