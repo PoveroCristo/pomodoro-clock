@@ -5,6 +5,9 @@ let intValueShortPause;
 let countdown;
 let timeLeft;
 let timeCounter = 0;
+let timeCounterPomodoro = 25;
+let timeCounterShortPause = 5;
+let timeCounterLongPause = 15;
 
 //[0] Pomodoro, [1] Short Pause, [2] Long Pause
 let timeSelectorsValue = document.getElementsByClassName("valueTime");
@@ -35,10 +38,10 @@ function minusPomodoro() {
     if (intValuePomodoro > 1) {
         timeSelectorsValue[0].innerHTML = intValuePomodoro - 1;
         if(timeSelectorsValue[0].innerHTML < 10) {
-            timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+            timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60;
             countdownValue[0].innerHTML = "0" + timeSelectorsValue[0].innerHTML + ":" + "00";
         }else if(timeSelectorsValue[0].innerHTML >= 10) {
-            timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+            timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60;
             countdownValue[0].innerHTML = timeSelectorsValue[0].innerHTML + ":" + "00";
         }
     }
@@ -48,13 +51,13 @@ function plusPomodoro() {
     let valuePomodoro = timeSelectorsValue[0].innerHTML;
     intValuePomodoro = parseInt(valuePomodoro);
     if (intValuePomodoro < 60) {
-        timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+        timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60;
         timeSelectorsValue[0].innerHTML = intValuePomodoro + 1;
         if(timeSelectorsValue[0].innerHTML < 10) {
-            timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+            timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60;
             countdownValue[0].innerHTML = "0" + timeSelectorsValue[0].innerHTML + ":" + "00";
         }else if(timeSelectorsValue[0].innerHTML >= 10) {
-            timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+            timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60;
             countdownValue[0].innerHTML = timeSelectorsValue[0].innerHTML + ":" + "00";
         }
     }
@@ -102,8 +105,33 @@ function reset() {
     countdownValue[0].innerHTML = timeSelectorsValue[0].innerHTML + ":" + "00";
     buttonPause[0].classList.remove("active");
     buttonPause[0].innerHTML = "<h4>Pause</h4>"
-    timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60
+    timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60
     console.log("popo")
+}
+
+// Start function
+function start() {
+    document.getElementsByClassName("pomodoro1")[0].src = "pomodoro_pixeloso.png"
+    if(timeCounterPomodoro > 0) {
+        timeLeft = timeCounterPomodoro - 1;
+        timeCounterPomodoro = timeLeft;
+        let minutesLeft = Math.floor(timeCounterPomodoro / 60);
+        let secondsLeft = Math.floor(timeCounterPomodoro % 60);
+
+        if(minutesLeft >= 10) {
+            if(secondsLeft >= 10) {
+            countdownValue[0].innerHTML = minutesLeft + ":" + secondsLeft;
+            }else if (secondsLeft < 10) {
+                countdownValue[0].innerHTML = minutesLeft + ":0" + secondsLeft;
+            }
+        }else if (minutesLeft < 9) {
+            if(secondsLeft >= 10) {
+                countdownValue[0].innerHTML = "0" + minutesLeft + ":" + secondsLeft;
+            }else if (secondsLeft < 10) {
+                countdownValue[0].innerHTML = "0" + minutesLeft + ":0" + secondsLeft;
+            }          
+        }
+    }
 }
 //Time selectors event listeners
 buttonMinusPomodoro[0].addEventListener("click", minusPomodoro);
@@ -118,36 +146,20 @@ buttonPlusLongPause[0].addEventListener("click", plusLongPause);
 //Button Reset [Resets all values to default]
 buttonReset[0].addEventListener("click", reset);
 
-timeCounter = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+timeCounterPomodoro = parseInt(timeSelectorsValue[0].innerHTML) * 60;
+
 //Button Start 
 buttonStart[0].addEventListener("click", () => {
-    buttonMinusPomodoro[0].removeEventListener("click", minusPomodoro)
-    countdown = setInterval(
-        function() {
-            document.getElementsByClassName("pomodoro1")[0].src = "pomodoro_pixeloso.png"
-            if(timeCounter > 0) {
-                timeLeft = timeCounter - 1;
-                timeCounter = timeLeft;
-                let minutesLeft = Math.floor(timeCounter / 60);
-                let secondsLeft = Math.floor(timeCounter % 60);
+    //Time Selectors buttons don't work while timer is working
+    buttonMinusPomodoro[0].removeEventListener("click", minusPomodoro);
+    buttonPlusPomodoro[0].removeEventListener("click", plusPomodoro);
+    buttonMinusShortPause[0].removeEventListener("click", minusShortPause);
+    buttonPlusShortPause[0].removeEventListener("click", plusShortPause);
+    buttonMinusLongPause[0].removeEventListener("click", minusLongPause);
+    buttonPlusLongPause[0].removeEventListener("click", plusLongPause);
 
-                if(minutesLeft >= 10) {
-                    if(secondsLeft >= 10) {
-                    countdownValue[0].innerHTML = minutesLeft + ":" + secondsLeft;
-                    }else if (secondsLeft < 10) {
-                        countdownValue[0].innerHTML = minutesLeft + ":0" + secondsLeft;
-                    }
-                }else if (minutesLeft < 9) {
-                    if(secondsLeft >= 10) {
-                        countdownValue[0].innerHTML = "0" + minutesLeft + ":" + secondsLeft;
-                    }else if (secondsLeft < 10) {
-                        countdownValue[0].innerHTML = "0" + minutesLeft + ":0" + secondsLeft;
-                    }          
-                }
-            }
-        }
-        , 1000)
-        console.log(timeCounter); 
+    countdown = setInterval(start, 1000);
+        console.log(timeCounterPomodoro); 
 })
 
 //Button Pause
@@ -156,9 +168,34 @@ buttonPause[0].addEventListener("click", () => {
     if (buttonPause[0].classList.contains("active")) {
         clearInterval(countdown);
         buttonPause[0].innerHTML = "<h4>Resume</h4>"
-        console.log(timeCounter);
+        console.log(timeCounterPomodoro);
     } else {
-        countdown;
+        countdown = setInterval(start, 1000);
+        /*countdown = setInterval(
+            function() {
+                document.getElementsByClassName("pomodoro1")[0].src = "pomodoro_pixeloso.png"
+                if(timeCounterPomodoro > 0) {
+                    timeLeft = timeCounterPomodoro - 1;
+                    timeCounterPomodoro = timeLeft;
+                    let minutesLeft = Math.floor(timeCounterPomodoro / 60);
+                    let secondsLeft = Math.floor(timeCounterPomodoro % 60);
+    
+                    if(minutesLeft >= 10) {
+                        if(secondsLeft >= 10) {
+                        countdownValue[0].innerHTML = minutesLeft + ":" + secondsLeft;
+                        }else if (secondsLeft < 10) {
+                            countdownValue[0].innerHTML = minutesLeft + ":0" + secondsLeft;
+                        }
+                    }else if (minutesLeft < 9) {
+                        if(secondsLeft >= 10) {
+                            countdownValue[0].innerHTML = "0" + minutesLeft + ":" + secondsLeft;
+                        }else if (secondsLeft < 10) {
+                            countdownValue[0].innerHTML = "0" + minutesLeft + ":0" + secondsLeft;
+                        }          
+                    }
+                }
+            }
+            , 1000)*/
         buttonPause[0].innerHTML = "<h4>Pause</h4>";
     }
 })
