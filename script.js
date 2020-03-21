@@ -110,7 +110,7 @@ function reset() {
 }
 
 // Start function
-function start() {
+//function start() {
     document.getElementsByClassName("pomodoro1")[0].src = "pomodoro_pixeloso.png"
     if(timeCounterPomodoro > 0) {
         timeLeft = timeCounterPomodoro - 1;
@@ -132,6 +132,10 @@ function start() {
             }          
         }
     }
+//}
+
+function mainTimer() {
+    
 }
 //Time selectors event listeners
 buttonMinusPomodoro[0].addEventListener("click", minusPomodoro);
@@ -171,31 +175,6 @@ buttonPause[0].addEventListener("click", () => {
         console.log(timeCounterPomodoro);
     } else {
         countdown = setInterval(start, 1000);
-        /*countdown = setInterval(
-            function() {
-                document.getElementsByClassName("pomodoro1")[0].src = "pomodoro_pixeloso.png"
-                if(timeCounterPomodoro > 0) {
-                    timeLeft = timeCounterPomodoro - 1;
-                    timeCounterPomodoro = timeLeft;
-                    let minutesLeft = Math.floor(timeCounterPomodoro / 60);
-                    let secondsLeft = Math.floor(timeCounterPomodoro % 60);
-    
-                    if(minutesLeft >= 10) {
-                        if(secondsLeft >= 10) {
-                        countdownValue[0].innerHTML = minutesLeft + ":" + secondsLeft;
-                        }else if (secondsLeft < 10) {
-                            countdownValue[0].innerHTML = minutesLeft + ":0" + secondsLeft;
-                        }
-                    }else if (minutesLeft < 9) {
-                        if(secondsLeft >= 10) {
-                            countdownValue[0].innerHTML = "0" + minutesLeft + ":" + secondsLeft;
-                        }else if (secondsLeft < 10) {
-                            countdownValue[0].innerHTML = "0" + minutesLeft + ":0" + secondsLeft;
-                        }          
-                    }
-                }
-            }
-            , 1000)*/
         buttonPause[0].innerHTML = "<h4>Pause</h4>";
     }
 })
